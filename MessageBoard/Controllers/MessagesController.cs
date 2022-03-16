@@ -12,19 +12,21 @@ namespace MessageBoard.Controllers {
       _db = db;
     }
     [HttpPost]
-    public ActionResult Create(Message message, int UserId, int RoomId) 
+    public ActionResult Create(Message message, int RoomId) 
     {
       _db.Messages.Add(message);
+      _db.SaveChanges();
+      _db.RoomMessages.Add(new RoomMessage() { RoomId = RoomId, MessageId = message.MessageId });
       _db.SaveChanges();
       return RedirectToAction($"Details/{RoomId}", "Rooms");
     }
     
     public ActionResult Details(int id)
     {
-    var thisMessage = _db.Messages
-      .Include(message => message.JoinEntities)
-      .ThenInclude(join => join.User)
-      .FirstOrDefault(message => message.MessageId == id);
+    var thisMessage = _db.Messages;
+      // .Include(message => message.JoinEntities)
+      // .ThenInclude(join => join.User)
+      // .FirstOrDefault(message => message.MessageId == id);
     return View(thisMessage);
     }
   }

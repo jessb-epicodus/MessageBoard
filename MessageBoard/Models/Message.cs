@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace MessageBoard.Models {
   public class Message {
     public Message () {
-      this.JoinEntities = new HashSet<UserMessage>();
+      this.JoinEntities = new HashSet<RoomMessage>();
     }
     public int MessageId { get; set; }
     public int RoomId { get; set; }
@@ -11,6 +11,7 @@ namespace MessageBoard.Models {
     public string Title { get; set; }
     public string Content { get; set; }
     public virtual Room Room { get; set; }
-    public virtual ICollection<UserMessage> JoinEntities { get;}
+    public virtual User User { get; set; }
+    public virtual ICollection<RoomMessage> JoinEntities { get;}
   }
 }

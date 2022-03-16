@@ -1,19 +1,21 @@
 @{Layout = "_Layout";}
 
 @using MessageBoard.Models;
-@model MessageBoard.Models.Room;  
+@model MessageBoard.Models.Room; 
 
 <h1>@Model.Name</h1>
 <hr>
 
-@if (@Model.Messages.Count == 0 ) 
+@if (@Model.JoinEntities.Count == 0 ) 
 {
-  <p><em>No messages have been added.</em></p>
+  <p><em>No messages have been added for this room.</em></p>
 }
 <ul>
-  @foreach(Message message in Model.Messages) 
+  @foreach(var message in Model.JoinEntities) 
   {
-    <p>@Html.ActionLink($"{message.Title}", "Details", "Messages", new { id = message.MessageId })</p>
+    <hr>
+    <p>@message.Message.Title </p>
+    <p>@message.Message.Content</p>
   }
 </ul>
 <hr>

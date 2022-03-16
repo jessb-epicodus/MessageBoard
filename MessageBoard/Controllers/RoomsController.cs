@@ -22,7 +22,6 @@ namespace MessageBoard.Controllers {
       return View();
     }
 
-
     [HttpPost]
     public ActionResult Create(Room room)
     {
