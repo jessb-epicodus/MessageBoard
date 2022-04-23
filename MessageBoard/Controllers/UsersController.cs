@@ -29,5 +29,12 @@ namespace MessageBoard.Controllers {
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
+    public ActionResult Details(int id)
+    {
+    User thisUser = _db.Users.FirstOrDefault(user => user.UserId == id);
+    // ViewBag.ListOfMessages = _db.Messages.ToList();
+    // List<Message> model = _db.Messages.Include(message => message.User).ToList();
+    return View(thisUser);
+    }
   }
 }

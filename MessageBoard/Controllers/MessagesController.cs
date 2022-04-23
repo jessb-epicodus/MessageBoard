@@ -11,6 +11,12 @@ namespace MessageBoard.Controllers {
     public MessagesController(MessageBoardContext db) {
       _db = db;
     }
+
+    public ActionResult Index()
+    {
+      return View(_db.Messages.ToList());
+    }
+
     [HttpPost]
     public ActionResult Create(Message message, int RoomId) 
     {
@@ -23,10 +29,13 @@ namespace MessageBoard.Controllers {
     
     public ActionResult Details(int id)
     {
-    var thisMessage = _db.Messages;
-      // .Include(message => message.JoinEntities)
-      // .ThenInclude(join => join.User)
-      // .FirstOrDefault(message => message.MessageId == id);
+    var thisMessage = _db.Messages
+      .Include(message => message.JoinEntities)
+      .ThenInclude(join => join.Room)
+      .FirstOrDefault(message => message.MessageId == id);
+    ViewBag.ListOfUsers = _db.Users.ToList();
+    ViewBag.UserDeets = _db.Users.FirstOrDefault(u => u.UserId == thisMessage.UserId);
+    ViewBag.User = thisMessage.User;
     return View(thisMessage);
     }
   }

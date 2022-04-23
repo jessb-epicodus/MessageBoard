@@ -10,7 +10,7 @@
 }
 <ul>
   @foreach(User user in Model) {
-    <p>@user.UserName</p>
+    <p>@Html.ActionLink($"{user.UserName}", "Details", new {user.UserId})</p>
   }
 </ul>
 <p>@Html.ActionLink("Add User", "Create")</p>

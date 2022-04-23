@@ -1,9 +1,23 @@
 @{Layout = "_Layout";}
 
-
+@using MessageBoard.Models;
 @model MessageBoard.Models.Message;  
 
   <h1>@Model.Title</h1>
-  <h5>By: @Model.User.UserName</h5>
-  <hr>
+  @* <h5>By: @Model.UserId</h   @Model.User.UserName5> *@
+  
+  @foreach(User user in ViewBag.ListOfUsers)
+  {
+    if (user.UserId == @Model.UserId)
+    {
+      <h5>By @user.UserName</h5>
+    } 
+  }
+  
+@* @Model.Room.Name *@
+
+  User Deets:
+  @ViewBag.UserDeets.UserName     
+
+  <hr>  
   <p>@Model.Content</p>

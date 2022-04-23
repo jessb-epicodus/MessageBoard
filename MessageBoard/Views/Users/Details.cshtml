@@ -1,0 +1,63 @@
+@* @{Layout = "_Layout";}
+
+@using MessageBoard.Models;
+@model MessageBoard.Models.User; 
+
+<h1>@Model.UserName</h1>
+<hr>
+
+@if (@Model.Count == 0 ) 
+{
+  <p><em>No messages have been added by this user.</em></p>
+}
+<ul>
+  @foreach (Message message in Model) 
+  {
+    <hr>
+    <p>@message.Title </p>
+    <p>@message.Content</p>
+  }
+</ul>
+
+@if (@Model.Messages.Count == 0){
+  <p><em>No clients have been added yet!</em></p>
+} @foreach (Message message in Model.Messages) {
+  <p>@Html.DisplayFor(model => model.Messages.Title)</p>
+}
+
+{
+public ActionResult Details(int id)
+{
+  var thisAttendee = _db.Attendees
+      .Include(a => a.JoinEntities)
+      .ThenInclude(join => join.Show)
+      .FirstOrDefault(a => a.AttendeeId == id);
+  return View(thisAttendee);
+}
+
+@model Venue.Models.Attendee
+
+<h2>Attendee Details</h2>
+<hr />
+<h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
+
+@if(@Model.JoinEntities.Count == 0)
+{
+  <p>This item does not belong to any categories</p>
+}
+else
+{
+  <h4>Shows the attendee has gone to to:</h4>
+  <ul>
+  @foreach(var join in Model.JoinEntities)
+  {
+    <li>@join.Show.Name</li>
+    @using (Html.BeginForm("DeleteShow", "Attendees"))
+    {
+      @Html.Hidden("joinId", @join.ShowAttendeeId)
+      <input type="submit" value ="Delete"/>
+    }
+  }
+  </ul>
+}
+}  *@
